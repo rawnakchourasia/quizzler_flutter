@@ -29,6 +29,16 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Widget> scorekeeper = [
+    const Icon(
+      Icons.check,
+      color: Colors.green,
+    ),
+    const Icon(
+      Icons.cancel,
+      color: Colors.red,
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,6 +67,13 @@ class _QuizPageState extends State<QuizPage> {
             child: FloatingActionButton(
               backgroundColor: Colors.green,
               onPressed: () {
+                setState(() {
+                  scorekeeper.add(const Icon(
+                    Icons.check,
+                    color: Colors.green,
+                  ));
+                });
+
                 //The user picked true.
               },
               shape: const RoundedRectangleBorder(
@@ -91,7 +108,9 @@ class _QuizPageState extends State<QuizPage> {
             ),
           ),
         ),
-        //TODO: Add a Row here as your score keeper
+        Row(
+          children: scorekeeper,
+        )
       ],
     );
   }
