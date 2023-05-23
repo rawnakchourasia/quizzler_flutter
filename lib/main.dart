@@ -48,6 +48,8 @@ class _QuizPageState extends State<QuizPage> {
 
   int questionNumber = 0;
 
+  List<bool> answers = [false, true, true];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -77,6 +79,12 @@ class _QuizPageState extends State<QuizPage> {
               backgroundColor: Colors.green,
               onPressed: () {
                 setState(() {
+                  bool isAnswerCorrect = answers[questionNumber];
+                  if (isAnswerCorrect) {
+                    print('User got is right');
+                  } else {
+                    print('User got it wrong!');
+                  }
                   scorekeeper.add(const Icon(
                     Icons.check,
                     color: Colors.green,
@@ -104,6 +112,12 @@ class _QuizPageState extends State<QuizPage> {
             child: FloatingActionButton(
               backgroundColor: Colors.red,
               onPressed: () {
+                bool isAnswerCorrect = answers[questionNumber];
+                if (!isAnswerCorrect) {
+                  print('User got is right');
+                } else {
+                  print('User got it wrong!');
+                }
                 setState(() {
                   questionNumber++;
                 });
