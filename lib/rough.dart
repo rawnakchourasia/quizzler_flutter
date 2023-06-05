@@ -1,24 +1,15 @@
-mixin ElectricVehicle {
-  void charge() {
-    print('Charging the electric vehicle...');
-  }
-}
+class Human {
+  double height;
+  double weight;
 
-mixin SelfDriving {
-  void navigate() {
-    print('Self-driving mode engaged.');
-  }
-}
-
-class Car with ElectricVehicle, SelfDriving {
-  void start() {
-    print('Car started.');
-  }
+  // Constructor
+  Human(this.height, this.weight);
 }
 
 void main() {
-  Car myCar = Car();
-  myCar.start();
-  myCar.charge();
-  myCar.navigate();
+  var jenny = Human(15, 3.5);
+  var james = Human(20, 4.2);
+
+  print(jenny.height); // Output: 15
+  print(james.height); // Output: 20
 }

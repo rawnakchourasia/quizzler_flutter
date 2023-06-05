@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzler_flutter/quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 QuizBrain quizbrain = QuizBrain();
 
@@ -33,7 +34,20 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scorekeeper = [];
-
+  List<Widget> scorekeeper1 = [
+    const Icon(
+      Icons.check,
+      color: Colors.green,
+    ),
+    const Icon(
+      Icons.check,
+      color: Colors.green,
+    ),
+    const Icon(
+      Icons.cancel,
+      color: Colors.red,
+    )
+  ];
   void checkAnswer(bool userPickedAnswer) {
     setState(() {
       if (userPickedAnswer == quizbrain.getCorrectAnswer()) {
@@ -48,9 +62,27 @@ class _QuizPageState extends State<QuizPage> {
         ));
       }
     });
-    setState(() {
-      quizbrain.nextQuestion();
-    });
+    if (quizbrain.isFinished()) {
+      int correctCount = scorekeeper
+          .where((widget) => widget is Icon && widget.icon == Icons.check)
+          .length;
+      int incorrectCount = scorekeeper.length - correctCount;
+      Alert(
+              context: context,
+              title: "Finished!",
+              desc:
+                  "The game is over. Correct: $correctCount, Incorrect: $incorrectCount")
+          .show();
+      quizbrain.reset();
+
+      setState(() {
+        scorekeeper = [];
+      });
+    } else {
+      setState(() {
+        quizbrain.nextQuestion();
+      });
+    }
   }
 
   @override
