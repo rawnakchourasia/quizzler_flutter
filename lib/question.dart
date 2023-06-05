@@ -7,8 +7,5 @@ class Question {
   Question(
     this.questionText,
     this.questionAns,
-  ) {
-    questionText = questionText;
-    questionAns = questionAns;
-  }
+  );
 }
