@@ -34,8 +34,6 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scorekeeper = [];
 
-  int questionNumber = 0;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,7 +46,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizbrain.questionBank[questionNumber].questionText,
+                quizbrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 25.0,
@@ -65,8 +63,7 @@ class _QuizPageState extends State<QuizPage> {
               backgroundColor: Colors.green,
               onPressed: () {
                 setState(() {
-                  bool isAnswerCorrect =
-                      quizbrain.questionBank[questionNumber].questionAns;
+                  bool isAnswerCorrect = quizbrain.getCorrectAnswer();
                   if (isAnswerCorrect) {
                     print('User got is right');
                   } else {
@@ -76,7 +73,7 @@ class _QuizPageState extends State<QuizPage> {
                     Icons.check,
                     color: Colors.green,
                   ));
-                  questionNumber++;
+                  quizbrain.nextQuestion();
                 });
 
                 //The user picked true.
@@ -99,15 +96,14 @@ class _QuizPageState extends State<QuizPage> {
             child: FloatingActionButton(
               backgroundColor: Colors.red,
               onPressed: () {
-                bool isAnswerCorrect =
-                    quizbrain.questionBank[questionNumber].questionAns;
+                bool isAnswerCorrect = quizbrain.getCorrectAnswer();
                 if (!isAnswerCorrect) {
                   print('User got is right');
                 } else {
                   print('User got it wrong!');
                 }
                 setState(() {
-                  questionNumber++;
+                  quizbrain.nextQuestion();
                 });
 
                 //The user picked false.
