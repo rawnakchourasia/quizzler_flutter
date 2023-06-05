@@ -34,6 +34,25 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scorekeeper = [];
 
+  void checkAnswer(bool userPickedAnswer) {
+    setState(() {
+      if (userPickedAnswer == quizbrain.getCorrectAnswer()) {
+        scorekeeper.add(const Icon(
+          Icons.check,
+          color: Colors.green,
+        ));
+      } else {
+        scorekeeper.add(const Icon(
+          Icons.cancel,
+          color: Colors.red,
+        ));
+      }
+    });
+    setState(() {
+      quizbrain.nextQuestion();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -62,21 +81,7 @@ class _QuizPageState extends State<QuizPage> {
             child: FloatingActionButton(
               backgroundColor: Colors.green,
               onPressed: () {
-                setState(() {
-                  bool isAnswerCorrect = quizbrain.getCorrectAnswer();
-                  if (isAnswerCorrect) {
-                    print('User got is right');
-                  } else {
-                    print('User got it wrong!');
-                  }
-                  scorekeeper.add(const Icon(
-                    Icons.check,
-                    color: Colors.green,
-                  ));
-                  quizbrain.nextQuestion();
-                });
-
-                //The user picked true.
+                checkAnswer(true);
               },
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(0.0))),
@@ -96,17 +101,7 @@ class _QuizPageState extends State<QuizPage> {
             child: FloatingActionButton(
               backgroundColor: Colors.red,
               onPressed: () {
-                bool isAnswerCorrect = quizbrain.getCorrectAnswer();
-                if (!isAnswerCorrect) {
-                  print('User got is right');
-                } else {
-                  print('User got it wrong!');
-                }
-                setState(() {
-                  quizbrain.nextQuestion();
-                });
-
-                //The user picked false.
+                checkAnswer(false);
               },
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(0.0))),
